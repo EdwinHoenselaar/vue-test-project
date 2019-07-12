@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <Header class="row justify-content-center"/>
-    <PokemonList v-bind:pokemon="pokemon" class="col-4"/>
-    <Pokemon class="col-8" />
+    <div class="row">
+      <PokemonList v-bind:pokemon="pokemon" class="col-4" v-on:pass-url="changeCurrentPokemon"/>
+      <Pokemon class="col-4" v-bind:currentPokemonUrl="currentPokemonUrl"/>
+      <PokemonType class="col-4" />
+    </div>
   </div>
 </template>
 
@@ -10,6 +13,7 @@
 import PokemonList from './components/PokemonList'
 import Header from './components/Header'
 import Pokemon from './components/Pokemon'
+import PokemonType from './components/PokemonType'
 import axios from 'axios'
 
 export default {
@@ -17,6 +21,7 @@ export default {
   components: {
     PokemonList,
     Pokemon,
+    PokemonType,
     Header
   },
   data() {
@@ -32,6 +37,11 @@ export default {
         this.pokemon = res.data.results
         })
       .catch(err => console.error(err))
+  },
+  methods: {
+    changeCurrentPokemon(url) {
+      this.currentPokemonUrl = url
+    }
   }
 }
 </script>
