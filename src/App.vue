@@ -2,7 +2,7 @@
   <div id="app">
     <Header class="row justify-content-center"/>
     <div class="row">
-      <PokemonList v-bind:pokemon="pokemon" class="col-4" v-on:pass-url="changeCurrentPokemon"/>
+      <PokemonList v-bind:pokemons="pokemons" class="col-4" v-on:pass-url="changeCurrentPokemon"/>
       <Pokemon class="col-4" v-bind:currentPokemonUrl="currentPokemonUrl"/>
       <PokemonType class="col-4" />
     </div>
@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      pokemon:[],
+      pokemons:[],
       currentPokemonUrl: ''
     }
   },
@@ -34,7 +34,7 @@ export default {
     axios.get("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150")
       .then(res => {
         console.log('response test: ', res.data)
-        this.pokemon = res.data.results
+        this.pokemons = res.data.results
         })
       .catch(err => console.error(err))
   },
