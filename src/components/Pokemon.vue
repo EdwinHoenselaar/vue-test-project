@@ -2,7 +2,10 @@
   <div>
     <p>ID: {{currentPokemon.id}}</p>
     <p>Name: {{currentPokemon.name}}</p>
-    <p>Type: {{currentPokemon.type}}</p>
+    <p>Types:</p>
+    <div v-for="type in currentPokemon.types" v-bind:key="type.type.name">
+      <p>{{type.type.name}}</p>
+    </div>
     <p>Height: {{currentPokemon.height}}</p>
     <p>Weight: {{currentPokemon.weight}}</p>
   </div>
@@ -10,13 +13,11 @@
 
 <script>
 import axios from 'axios'
-
 export default {
   name: "Pokemon",
   props: ["currentPokemonUrl"],
   watch: {
     currentPokemonUrl: function getPokemon(newVal, oldVal) {
-      console.log('watch test: ', newVal, oldVal)
       axios.get(newVal)
         .then(res => this.currentPokemon = res.data)
         .catch(err => console.error(err))
