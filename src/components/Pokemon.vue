@@ -4,7 +4,7 @@
     <p>Name: {{currentPokemon.name}}</p>
     <p>Types:</p>
     <div v-for="type in currentPokemon.types" v-bind:key="type.type.name">
-      <p>{{type.type.name}}</p>
+      <p class="bold">{{type.type.name}}</p>
     </div>
     <p>Height: {{currentPokemon.height}}</p>
     <p>Weight: {{currentPokemon.weight}}</p>
@@ -33,6 +33,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .bold {
+    color: red;
+  }
 </style>
 

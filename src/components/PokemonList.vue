@@ -10,12 +10,5 @@
 export default {
   name: "PokemonList",
   props: ["pokemons"],
-  methods: {
-    changeCurrentPokemon(e) {
-      e.preventdefault()
-
-
-    }
-  }
 }
 </script>
