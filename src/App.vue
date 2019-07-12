@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Header class="row justify-content-center"/>
-    <PokemonList v-bind:pokemon="pokemon" class="col-4"/>
-    <Pokemon class="col-8" />
+    <PokemonList v-bind:pokemon="pokemon" class="col-4" v-on:pass-url="changeCurrentPokemon"/>
+    <Pokemon class="col-8" v-bind:currentPokemonUrl="currentPokemonUrl"/>
   </div>
 </template>
 
@@ -32,6 +32,11 @@ export default {
         this.pokemon = res.data.results
         })
       .catch(err => console.error(err))
+  },
+  methods: {
+    changeCurrentPokemon(url) {
+      this.currentPokemonUrl = url
+    }
   }
 }
 </script>
