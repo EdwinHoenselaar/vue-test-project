@@ -47,9 +47,7 @@ export default {
       this.checkedTypes.map(type => {
         axios.get(`http://pokeapi.co/api/v2/type/${type}`)
           .then(res => {
-            const tempArray = [...this.pokemonListByTypes, ...res.data.pokemon]
-            console.log('tempArray: ', tempArray)
-            const arrayWithoutKeys = tempArray.map(pokemon => {
+            const arrayWithoutKeys = res.data.pokemon.map(pokemon => {
               // console.log('inside map', pokemon)
               const object = {
                 name: pokemon.pokemon.name,
@@ -58,9 +56,11 @@ export default {
               return object
             })
             console.log('arrayWithoutKeys', arrayWithoutKeys)
-            // const filteredArray = this.removeDuplicates(tempArray, "name")
-            // console.log('filteredArray check: ', filteredArray)
-            this.pokemonListByTypes = arrayWithoutKeys//filteredArray
+            const tempArray = [...this.pokemonListByTypes, ...arrayWithoutKeys]
+            console.log('tempArray: ', tempArray)
+            const filteredArray = this.removeDuplicates(tempArray, "name")
+            console.log('filteredArray check: ', filteredArray)
+            this.pokemonListByTypes = filteredArray//arrayWithoutKeys
             this.$emit('new-list', this.pokemonListByTypes);
           })
           .catch(err => console.error(err))
