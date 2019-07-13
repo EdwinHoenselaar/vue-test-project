@@ -1,4 +1,6 @@
-# apostle-test
+# vue-test-project
+
+Test project to learn the vue.js framework. In this app I use axios to make http calls to the free pokeAPI. 
 
 ## Project setup
 ```
