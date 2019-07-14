@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container poke-header">
     <h1>Welkom bij de Apostle Pokemon app</h1>
   </div>
 </template>
@@ -11,7 +11,14 @@ export default {
 </script>
 
 <style scoped>
-
+  .poke-header {
+    background: lightblue;
+    color: red;
+    border-bottom: 2px solid black;
+    border-radius: 10px;
+    padding:10px;
+    margin: 20px;
+  }
 </style>
 
 

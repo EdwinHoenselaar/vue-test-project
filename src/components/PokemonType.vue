@@ -1,48 +1,76 @@
 <template>
   <div class="col">
-    <div class="row">
-      <input type="checkbox" />
-      <p>Grass</p>
+    <div v-for="type in types" v-bind:key="type.name" class="row">
+      <input type="checkbox" :id="type.name" :value="type.name" v-model="checkedTypes" >
+      <p>{{type.name}}</p>
     </div>
-    <div class="row">
-      <input type="checkbox" />
-      <p>Fire</p>
-    </div>
-        <div class="row">
-      <input type="checkbox" />
-      <p>Bug</p>
-    </div>
-        <div class="row">
-      <input type="checkbox" />
-      <p>Ghost</p>
-    </div>
-        <div class="row">
-      <input type="checkbox" />
-      <p>Metal</p>
-    </div>
-        <div class="row">
-      <input type="checkbox" />
-      <p>Ground</p>
-    </div>
-        <div class="row">
-      <input type="checkbox" />
-      <p>Flying</p>
-    </div>
-
-    <!-- <div class="input-group-prepend">
-      <div class="input-group-text">
-        <input type="checkbox" aria-label="Checkbox for following text input">
-      </div>
-    </div>
-    <input type="text" class="form-control" aria-label="Text input with checkbox">
-    <div class="input-group-prepend">
-      <div class="input-group-text">
-        <input type="checkbox" aria-label="Checkbox for following text input">
-      </div>
-    </div>
-    <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
   </div>
 
 </template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: "PokemonType",
+  data() {
+    return {
+      types: [],
+      checkedTypes: [],
+      pokemonListByTypes: [],
+    }
+  },
+  methods: {
+    removeDuplicates(originalArray, prop) {
+     var newArray = [];
+     var lookupObject  = {};
+
+     for(var i in originalArray) {
+        lookupObject[originalArray[i][prop]] = originalArray[i];
+     }
+
+     for(i in lookupObject) {
+         newArray.push(lookupObject[i]);
+     }
+      return newArray;
+    }
+  },
+  created() {
+    axios.get("http://pokeapi.co/api/v2/type/")
+      .then(res => {
+        this.types = res.data.results
+        })
+      .catch(err => console.error(err))
+  },
+  watch: {
+    checkedTypes: function getPokemonByTypes() {
+      this.pokemonListByTypes = []
+      this.checkedTypes.map(type => {
+        
+        axios.get(`http://pokeapi.co/api/v2/type/${type}`)
+          .then(res => {
+            const arrayWithoutKeys = res.data.pokemon.map(pokemon => {
+              // console.log('inside map', pokemon)
+              const object = {
+                name: pokemon.pokemon.name,
+                url: pokemon.pokemon.url
+              }
+              return object
+            })
+            const tempArray = [...this.pokemonListByTypes, ...arrayWithoutKeys]
+            console.log('tempArray: ', tempArray)
+            console.log('arrayWithoutKeys', arrayWithoutKeys)
+            const filteredArray = this.removeDuplicates(tempArray, "name")
+            console.log('filteredArray check: ', filteredArray)
+            this.pokemonListByTypes = filteredArray//arrayWithoutKeys
+            this.$emit('new-list', this.pokemonListByTypes);
+          })
+          .catch(err => console.error(err))
+      })
+    }
+  }
+  }
+</script>
+
 
 
