@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       pokemons:[],
-      currentPokemonUrl: '',
+      currentPokemonUrl: "https://pokeapi.co/api/v2/pokemon/1/",
       pokemonListByTypes: [],
       checkedTypes: [],
     }
