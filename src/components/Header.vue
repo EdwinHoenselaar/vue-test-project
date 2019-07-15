@@ -13,8 +13,7 @@ export default {
   name: "Header",
   methods: {
     getImgUrl(){
-      const random = Math.floor(Math.random() * 1000) + 1
-      console.log('random test: ', random)
+      const random = Math.floor(Math.random() * 100) + 1
       return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${random}.png`
     }
   }
